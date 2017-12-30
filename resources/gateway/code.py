@@ -1,6 +1,4 @@
 import web
-import view, config
-from view import render
 
 urls = (
     '/', 'index'
@@ -8,7 +6,7 @@ urls = (
 
 class index:
     def GET(self):
-        return render.base(view.listing())
+        return "basdasdaasd"
 
 if __name__ == "__main__":
     app = web.application(urls, globals())
