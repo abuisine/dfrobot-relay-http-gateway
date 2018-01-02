@@ -8,6 +8,7 @@ class Relay:
 
 	def send(self, message):
 		self.socket	= socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		self.socket.settimeout(3)
 		self.socket.connect((self.hostname, int(self.port)))
 		self.socket.sendall(json.dumps(message, separators=(',',':')))
 		received = self.socket.recv(1024)[:-1]
