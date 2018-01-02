@@ -5,27 +5,23 @@ class Relay:
 	def __init__(self, hostname, port):
 		self.hostname	= hostname
 		self.port		= port
-		self.connect()
-
-	def connect(self):
-		pass
 
 	def send(self, message):
 		self.socket	= socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.socket.connect((self.hostname, int(self.port)))
-		self.socket.sendall(json.dumps(message))
+		self.socket.sendall(json.dumps(message, separators=(',',':')))
 		received = self.socket.recv(1024)[:-1]
 		print "Received (%d): %s"%(len(received),received)
 		self.socket.close()
 
 		return json.loads(received)
 
-	def setRelayStatus(self, statuses):
-		{"relay1":"on"}
-		pass
+	def setRelayStatus(self, relays):
+		return self.send(relays)
+
 	def getRelayStatus(self):
-		{"get":"relayStatus"}
-		pass
+		return self.send({"get":"relayStatus"})
+		
 	def setDeviceName(self, name):
 		{"name":"DFRobot"}
 		pass

@@ -2,16 +2,31 @@ import web, os
 from Relay import *
 
 urls = (
-    '/', 'index'
+	'/',		'version',
+	'/relays',	'relays'
 )
 
 Relay = Relay(os.environ['RELAY_HOSTNAME'], os.environ['RELAY_PORT'])
 
-class index:
-    def GET(self):
-    	return Relay.getVersion()
+class version:
+	def GET(self):
+		return "Version: %s"%Relay.getVersion()['version']
+
+class relays:
+	def render(self, relays):
+		html = "<html>"
+		for relay in relays:
+			html += "%s: %s<br>"%(relay, relays[relay])
+		html += "</html>"
+		return html
+
+	def GET(self):
+		if ( len(web.input()) ):
+			return Relay.setRelayStatus(web.input())
+		else:
+			return self.render(Relay.getRelayStatus())
 
 if __name__ == "__main__":
-    app = web.application(urls, globals())
-    app.internalerror = web.debugerror
-    app.run()
+	app = web.application(urls, globals())
+	app.internalerror = web.debugerror
+	app.run()
