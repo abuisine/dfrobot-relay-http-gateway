@@ -12,6 +12,9 @@ class version:
 	def GET(self):
 		return "Version: %s"%Relay.getVersion()['version']
 
+	def POST(self):
+		return "Version: %s"%Relay.getVersion()['version']
+
 class relays:
 	def render(self, relays):
 		html = "<html>"
@@ -21,6 +24,12 @@ class relays:
 		return html
 
 	def GET(self):
+		if ( len(web.input()) ):
+			return Relay.setRelayStatus(web.input())
+		else:
+			return self.render(Relay.getRelayStatus())
+
+	def POST(self):
 		if ( len(web.input()) ):
 			return Relay.setRelayStatus(web.input())
 		else:
