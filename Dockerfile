@@ -1,5 +1,5 @@
 FROM python:2.7-alpine
-LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="1"
+LABEL maintainer="Alexandre Buisine <alexandrejabuisine@gmail.com>" version="1.2"
 
 COPY resources/gateway/ /usr/local/share/gateway/
 
